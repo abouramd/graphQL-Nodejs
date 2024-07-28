@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLList } from "graphql";
+import { GraphQLObjectType, GraphQLID, GraphQLList, GraphQLString } from "graphql";
 import { PostsType, AuthorType } from './Types.js';
 import AuthorModule from '../models/Author.js';
 import PostModule from '../models/Post.js';
@@ -24,16 +24,16 @@ export const RootQuery = new GraphQLObjectType({
       type: AuthorType,
       description: `get author by Id`,
       args: { id: { type: GraphQLString } },
-      resolve(parent, args) {
-        return AuthorModule.find({ id: args.id });
+      async resolve(parent, args) {
+        return AuthorModule.findOne({ id: args.id });
       }
     },
     post: {
       type: PostsType,
       description: `get post by Id`,
       args: { id: { type: GraphQLString } },
-      resolve(parent, args) {
-        return PostModule.find({ id: args.id });
+      async resolve(parent, args) {
+        return PostModule.findOne({ id: args.id });
       }
     }
   }

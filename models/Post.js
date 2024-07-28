@@ -5,7 +5,7 @@ import AutoIncrement from "./autoincrement.js";
 const Post = new Schema({
   id: { type: Number, unique: true },
   title: String,
-  author: String
+  authorId: Number
 });
 
 Post.plugin(AutoIncrement, { inc_field: 'id', id: 'post_counter', });

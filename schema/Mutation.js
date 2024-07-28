@@ -1,23 +1,22 @@
-import { GraphQLObjectType, GraphQLString } from "graphql";
+import { GraphQLObjectType, GraphQLString, GraphQLID } from "graphql";
 import { PostsType, AuthorType } from './Types.js';
 import AuthorModule from '../models/Author.js';
 import PostModule from '../models/Post.js';
 
 export const RootMutation = new GraphQLObjectType({
   name: 'RootMutation',
-  description: `add new post`,
   fields: {
     addPost: {
       type: PostsType,
       description: `add a new post`,
       args: {
         title: { type: GraphQLString },
-        author: { type: GraphQLString },
+        authorId: { type: GraphQLString },
       },
       resolve(parent, args) {
         return new PostModule({
           title: args.title,
-          author: args.author
+          authorId: args.authorId
         }).save();
       }
     },

@@ -6,14 +6,18 @@ services:
     restart: always
     env_file:
         - .env
-    ports:
-      # remove comment to open this port in your localhost
-      # - "27017:27017"
+    # open this port in your localhost
+    # ports:
+    #   - "27017:27017"
     networks:
         - app-network
+    # store database in volumes
+    # volumes:
+    #     - mongodb:/data/db
+    
   app:
     image: app
-    pull_pulicy: never
+    pull_policy: never
     build:
       dockerfile_inline:
         FROM node:22-alpine3.19
@@ -22,7 +26,7 @@ services:
 
         COPY package.json package-lock.json ./
 
-        RUN npm install
+        RUN npm install --force
 
         COPY . .
 
@@ -33,7 +37,7 @@ services:
     container_name: app 
     restart: always
     depends_on:
-        mongo
+      - mongo
     env_file:
         - .env
     ports:
@@ -45,4 +49,12 @@ services:
 networks:
   app-network:
     name: "app-network"
+
+
+
+
+volumes:
+  mongodb:
+    name: "mongoDatabase"
+
 

@@ -9,6 +9,4 @@ const schema = new GraphQLSchema({
   mutation: RootMutation,
 });
 
-
-
 export default schema; 
